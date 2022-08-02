@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="student">
+  <insert id="insertStudent" parameterType="student">
+		insert into
+			student(no,name,tel)
+		values(
+			seq_student_no.nextval, #{name}, #{tel}
+		)
+	</insert>
+	
+	<insert id="insertStudentMap" parameterType="map"> <!-- 웹으로 접근시 (만약 약칭 설정을 config에서 안했으면 풀네임적도록)-->
+		insert into
+			student(no,name,tel)
+		values(
+			seq_student_no.nextval, #{name}, #{tel}
+		)
+	</insert>
+	
+	<select id="getTotalCount" resultType="int"> <!-- select는 resultType을 꼭 명시해주어야 한다.-->
+		select
+			count(*)
+		from
+			student
+		where
+			deleted_at is null
+		
+	</select>
+	<select id="selectOneStudent" resultType="student"> <!-- 별칭등록을 해놔서 생략 가능. 원래는 풀네임(패키지명) 적어야함 -->
+		select
+			*
+		from 
+			student
+		where 
+			deleted_at is null and no=#{no}
+	</select>
+	
+	<update id="updateStudent" parameterType="student">
+		update student
+		set name=#{name}, tel=#{tel}
+		where no=#{no}
+	</update>
+	<update id="deleteStudent" parameterType="integer">
+		update student
+		set deleted_at = sysdate
+		where no=#{no}
+	</update>
+	
+	
+</mapper>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!--
+	 
+-->
+	<properties resource="/datasource.properties" />
+
+	<settings>
+		<setting name="jdbcTypeForNull" value="NULL" /> <!-- NULL데이터 전달시 그대로 null로 대입 -->
+		<setting name="mapUnderscoreToCamelCase" value="true"/> <!-- 언드스코어를 카멜케이싱으로 자동변환--> <!-- DB이름에서 Java객체로 자동변환 가능케 해줌-->
+	</settings>
+
+	<typeAliases>
+		<typeAlias type="com.kh.app.student.model.dto.Student" alias="student"/>
+		<package name="com.kh.app"/> <!-- 이거쓰면 위에꺼 안써도 되는데, 클래스이름 중복 등등의 문제에는 오류를 일으킴.-->
+	</typeAliases>
+
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED"> <!-- DBCP DataBase Connection Pool에 저장.-->
+				<property name="driver" value="${driver}" />
+				<property name="url" value="${url}" />
+				<property name="username" value="${username}" />
+				<property name="password" value="${password}" />
+			</dataSource>
+		</environment>
+	</environments>
+	<mappers>
+		<mapper resource="/mapper/student/student-mapper.xml" />
+	</mappers>
+</configuration>
